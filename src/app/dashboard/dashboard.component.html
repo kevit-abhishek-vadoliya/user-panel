@@ -1,1 +1,24 @@
-<p>dashboard works!</p>
+<div class="user-details">
+  <h2>User Details</h2>
+  <ul>
+    <li>Name: {{ formData.name }}</li>
+    <li>DOB: {{ formData.dob | date : "longDate" }}</li>
+    <li>Email: {{ formData.email }}</li>
+    <li>Phone Number: {{ formData.phoneNumber }}</li>
+    <li>
+      Education:
+      <ul>
+        <li>Institute: {{ formData.education.institute }}</li>
+        <li>Education: {{ formData.education.education }}</li>
+        <li>Percentage: {{ formData.education.percentage }}</li>
+      </ul>
+    </li>
+    <li *ngIf="formData.hobby.length">Hobby: {{ formData.hobby.join(",") }}</li>
+    <li>Gender: {{ formData.gender }}</li>
+    <li *ngIf="formData.address">Address: {{ formData.address }}</li>
+    <li *ngIf="formData.summary">Summary: {{ formData.summary }}</li>
+  </ul>
+  <div class="btns">
+    <button (click)="onEdit()">Edit</button>
+  </div>
+</div>

@@ -5,3 +5,15 @@
     border-radius: 10px;
     color: aliceblue;
 }
+
+.form-item {
+    display: flex;
+    align-items: center;
+    gap: 5px
+}
+
+.form-field-group {
+    display: flex;
+    justify-content: space-between;
+    margin: auto 20px;
+}

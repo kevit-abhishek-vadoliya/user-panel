@@ -25,10 +25,10 @@
     </div>
     <div class="form-field">
       <label for="phoneNumber">Phone Number:</label>
-      <input type="phoneNumber" id="phoneNumber" formControlName="phoneNumber" class="inp" />
+      <input type="tel" id="phoneNumber" formControlName="phoneNumber" class="inp" />
       <div class="error" *ngIf="form['phoneNumber'].touched">
         <span *ngIf="form['phoneNumber'].errors?.['required']">Phone Number is Required.</span>
-        <span *ngIf="form['phoneNumber'].errors?.['length']">Please enter valid phone number.</span>
+        <span *ngIf="form['phoneNumber'].errors?.['pattern']">Invalid Phone Number Format.</span>
       </div>
     </div>
     <div class="form-field" formGroupName="education">
@@ -36,27 +36,97 @@
       <div class="form-field">
         <label for="institute">Institute:</label>
         <input type="text" id="institute" formControlName="institute" class="inp" />
-        <div class="error" *ngIf="form['institute'].touched">
-          <span *ngIf="form['institute'].errors?.['required']">Phone Number is Required.</span>
-          <span *ngIf="form['institute'].errors?.['length']">Please enter valid phone number.</span>
+        <div class="error" *ngIf="form['education'].get('institute').touched">
+          <span *ngIf="form['education'].get('institute').errors?.['required']">Institute is Required.</span>
+          <span *ngIf="form['education'].get('institute').errors?.['minlength']">Minimum 2 characters required in Institute.</span>
         </div>
       </div>
       <div class="form-field">
         <label for="education">Education:</label>
-        <select name="education" id="education" formControlName="education" class="inp">
-          <option value="ssc">SSC</option>
-          <option value="hsc">HSC</option>
-          <option value="bTech">B.TECH</option>
-        </select>
-        <div class="error" *ngIf="form['institute'].touched">
-          <span *ngIf="form['institute'].errors?.['required']">Phone Number is Required.</span>
-          <span *ngIf="form['institute'].errors?.['length']">Please enter valid phone number.</span>
+        <input type="text" id="education" formControlName="education" class="inp" />
+        <div class="error" *ngIf="form['education'].get('education').touched">
+          <span *ngIf="form['education'].get('education').errors?.['required']">Education is Required.</span>
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="percentage">Percentage:</label>
+        <input type="number" id="percentage" formControlName="percentage" class="inp" />
+        <div class="error" *ngIf="form['education'].get('percentage').touched">
+          <span *ngIf="form['education'].get('percentage').errors?.['required']">Percentage is Required.</span>
+          <span *ngIf="form['education'].get('percentage').errors?.['min']">Percentage must be at least 0.</span>
+          <span *ngIf="form['education'].get('percentage').errors?.['max']">Percentage cannot exceed 100.</span>
         </div>
       </div>
     </div>
+    <div class="form-field-group">
+      <p>Hobby:</p>
+      <div class="form-item">
+        <label for="cricket">Cricket</label>
+        <input
+          type="checkbox"
+          id="cricket"
+          value="cricket"
+          [checked]="form['hobby']?.value?.includes('cricket')"
+          (change)="onCheckboxChange($event)" />
+      </div>
+      <div class="form-item">
+        <label for="dancing">Dancing</label>
+        <input
+          type="checkbox"
+          value="dancing"
+          id="dancing"
+          [checked]="form['hobby']?.value?.includes('dancing')"
+          (change)="onCheckboxChange($event)" />
+      </div>
+      <div class="form-item">
+        <label for="singing">Singing</label>
+        <input
+          type="checkbox"
+          value="singing"
+          id="singing"
+          [checked]="form['hobby']?.value?.includes('singing')"
+          (change)="onCheckboxChange($event)" />
+      </div>
+      <div class="error" *ngIf="form['hobby'].touched && form['hobby'].invalid">
+        <span *ngIf="form['hobby'].errors?.['required']">Please select at least one hobby.</span>
+      </div>
+    </div>
+    <div class="form-field-group">
+      <p>Gender:</p>
+      <div class="form-item">
+        <label for="male">Male</label>
+        <input type="radio" id="male" value="male" formControlName="gender" />
+      </div>
+      <div class="form-item">
+        <label for="female">Female</label>
+        <input type="radio" id="female" value="female" formControlName="gender" />
+      </div>
+      <div class="form-item">
+        <label for="other">Other</label>
+        <input type="radio" id="other" value="other" formControlName="gender" />
+      </div>
+      <div class="error" *ngIf="form['gender'].touched && form['gender'].invalid">
+        <span *ngIf="form['gender'].errors?.['required']">Please select a gender.</span>
+      </div>
+    </div>
+    <div class="form-field">
+      <label for="address">Address:</label>
+      <textarea id="address" formControlName="address" class="inp"></textarea>
+      <div class="error" *ngIf="form['address'].touched && form['address'].invalid">
+        <span *ngIf="form['address'].errors?.['required']">Address is Required.</span>
+      </div>
+    </div>
+    <div class="form-field">
+      <label for="summary">Summary:</label>
+      <textarea id="summary" formControlName="summary" class="inp"></textarea>
+      <div class="error" *ngIf="form['summary'].touched && form['summary'].invalid">
+        <span *ngIf="form['summary'].errors?.['required']">Summary is Required.</span>
+      </div>
+    </div>
+
     <div class="btns">
-      <button type="reset">Clear</button>
-      <button type="submit">Sign Up</button>
+      <button type="reset" (click)="onClear()">Clear</button>
+      <button type="submit" [disabled]="signUpForm.invalid">Sign Up</button>
     </div>
   </form>
 </div>
